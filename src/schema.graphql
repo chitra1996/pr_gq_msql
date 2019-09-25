@@ -1,0 +1,90 @@
+scalar DateTime
+
+enum AgencyPaymentPlanEnum {
+  POSTPAID
+  PREPAID
+}
+
+type Agency {
+  id: Int!
+  amount: Int
+  apiKey: String
+  apiToken: String!
+  billingAddress: String
+  billingAddressOptional: String
+  billingContact: String
+  billingEmail: String
+  cityId: Int
+  countryId: Int
+  createdAt: DateTime
+  name: String
+  ownerId: Int
+  paymentPlan: AgencyPaymentPlanEnum
+  stateId: Int
+  status: Int
+  updatedAt: DateTime
+}
+
+type Product {
+  id: Int!
+  createdAt: DateTime
+  description: String
+  name: String
+  status: Int
+  updatedAt: DateTime
+}
+
+type ProductPricing {
+  id: Int!
+  agency: Agency
+  apiId: Int
+  createdAt: DateTime
+  planId: Int
+  price: Float
+  product: Product
+  updatedAt: DateTime
+}
+
+input AgencyCreateInput {
+  id: Int
+  amount: Int
+  apiKey: String
+  apiToken: String!
+  billingAddress: String
+  billingAddressOptional: String
+  billingContact: String
+  billingEmail: String
+  cityId: Int
+  countryId: Int
+  name: String
+  ownerId: Int
+  stateId: Int
+  status: Int
+}
+
+input ProductCreateInput {
+  id: Int
+  description: String
+  name: String
+  status: Int
+}
+
+input ProductPricingCreateInput {
+  agency: Int
+  apiId: Int
+  planId: Int
+  price: Float
+  product: Int
+}
+
+type Query {
+    productpricing: [ProductPricing!]!
+    agency: [Agency!]!
+    product: [Product!]!
+}
+
+type Mutation {
+    createagency(input: AgencyCreateInput!): Agency
+    createproduct(input: ProductCreateInput): Product
+    createproductpricing(input: ProductPricingCreateInput): ProductPricing
+}
